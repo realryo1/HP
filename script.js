@@ -22,12 +22,14 @@
   };
 
   function updateScrollState() {
+    // スクロール量に応じてヘッダーとトップへ戻るボタンの表示を切り替える
     const scrolled = window.scrollY > 20;
     if (header) header.classList.toggle("is-scrolled", scrolled);
     if (topButton) topButton.classList.toggle("is-visible", window.scrollY > 500);
   }
 
   function createSnow() {
+    // 動きを減らす設定でなければ、雪粒を最大40個生成する
     const layer = document.querySelector("#snow-layer");
     if (!layer || prefersReducedMotion) return;
     const fragment = document.createDocumentFragment();
@@ -45,6 +47,7 @@
   }
 
   function setupReveal() {
+    // 画面に入った要素へ表示クラスを付け、フェードアップさせる
     const elements = document.querySelectorAll(".reveal");
     if (!("IntersectionObserver" in window) || prefersReducedMotion) {
       elements.forEach((element) => element.classList.add("is-visible"));
@@ -61,6 +64,7 @@
   }
 
   function selectBlock(blockNumber) {
+    // 選んだ丁目のボタン状態と詳細パネルの文言を更新する
     const data = blockData[blockNumber];
     if (!data) return;
     document.querySelectorAll("[data-block]").forEach((button) => {
@@ -77,12 +81,14 @@
   }
 
   function setupBlocks() {
+    // 丁目ボタンのクリックで詳細パネルを切り替える
     document.querySelectorAll("[data-block]").forEach((button) => {
       button.addEventListener("click", () => selectBlock(button.dataset.block));
     });
   }
 
   function setupMenu() {
+    // モバイルメニューの開閉と、リンク選択後に閉じる処理を設定する
     if (!menuToggle || !siteNav) return;
     menuToggle.addEventListener("click", () => {
       const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
@@ -98,6 +104,7 @@
   }
 
   function setupTopButton() {
+    // トップへ戻るボタンでページ先頭へスクロールする
     if (!topButton) return;
     topButton.addEventListener("click", () => {
       window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
